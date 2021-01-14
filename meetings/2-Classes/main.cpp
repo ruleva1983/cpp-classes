@@ -2,6 +2,7 @@
 #include <cstring>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 using namespace std;
 class Matrix
@@ -12,7 +13,7 @@ private:
     float *_data;
 public:
     //the constructor
-    Matrix(int nrows, int ncols, float *data, string name = "matrix") 
+    Matrix(int nrows, int ncols, float* data, string name = "matrix") 
         : _nrows(nrows), _ncols(ncols), _name(name)
     {
         _data = new float[_nrows * _ncols];
@@ -24,7 +25,7 @@ public:
             //copy array using memcpy is faster
             //std::memcpy(_data, data, _nrows * _ncols * sizeof(float));
         }
-        cout <<_name << " constructed\n";
+        cout << _name << " constructed\n";
     }
 
     //a default constructor (creates a 3 by 3 zero matrix)
@@ -41,31 +42,74 @@ public:
         cout << other._name << " copied\n";
     }
 
-    //a custom assignment operator
-    Matrix &operator=(Matrix other)
+    Matrix (Matrix&& other)
+    : _nrows(other._nrows), _ncols(other._ncols), _name(other._name)
     {
-        //create a copy of 'other' by passing by value
-        cout << other._name << " assigned to " << _name << endl;
-        if (this == &other) return *this;
-        
-        _nrows = other._nrows;
-        _ncols = other._ncols;
-
-        //swapping data pointers with input copy of matrix
-        float *tmp = _data;
+        cout << _name + " was only moved\n";
         _data = other._data;
-        other._data = tmp;
-
-        //the data pointer of 'this' points now to the input's data, 
-        //the input points to the original data of this matrix
-        //when scope ends, the destructor of the copy deletes the original data
+        other._data = nullptr;
+    }
+    //a custom assignment operator
+    Matrix &operator=(const Matrix& rhs)
+    {
+        cout << "assigning " + rhs._name + " to " + _name << endl;
+        if (this == &rhs) return *this;
         
+        _nrows = rhs._nrows;
+        _ncols = rhs._ncols;
+
+        //create a copy of rhs
+        Matrix copy_of_rhs(rhs);
+
+        //swapping data pointers with copy of the rhs
+        float *tmp = _data;
+        _data = copy_of_rhs._data;
+        copy_of_rhs._data = tmp;
+
+        //the data pointer of 'this' points now to the copy's data, 
+        //the copy points to the original data of this matrix,
+        //so when the scope ends, 
+        //the destructor of the copy deletes the original data
+        
+        //this way we make use of the memory allocation in the original constructor
+        //as well as of the destructor for the original data
+
+        string original_name = _name;
+        _name = copy_of_rhs._name;
+        copy_of_rhs._name = "original version of " + original_name;
+
         return *this;
+    }
+    
+    //TODO implement an operator that returns the sum of two matrices
+    // Matrix operator+(Matrix& rhs)
+    // {
+    //     so empty here :-(
+    // }
+
+
+    //a custom move assignment operator
+    Matrix &operator=(Matrix&& other)
+    {
+        if(this != &other)
+        {
+            cout << other._name << " moved to " << _name << endl;
+            
+            _nrows = other._nrows;
+            _ncols = other._ncols;
+
+            float *tmp = _data;
+            _data = other._data;
+            other._data = tmp;
+        }
+        return *this;
+         
     }
 
     //the print function is marked 'const', therefore it will not change the object
     void Print() const
     {
+        cout << _name << " is a " << _nrows << " by " << _ncols << " matrix\n";
         for (int row = 0; row < _nrows; row++)
         {
             for (int col = 0; col < _ncols; col++)
@@ -103,13 +147,16 @@ public:
     //a custom destructor
     ~Matrix()
     {
-        cout << _name << " destructed\n";
-        delete[] _data;
+        if(_data != nullptr)
+        {
+            cout << _name << " destructed\n";
+            delete[] _data;
+        }
     }
 };
 
 //this function should really only take a reference
-//passing by value calls the copy constructor of matrix
+//passing by value calls the copy constructor of the Matrix class
 void PrintTransposeMatrix(Matrix matrix)
 {
     for(int j = 0; j < matrix.GetNumberOfCols(); j++)
@@ -144,34 +191,50 @@ int main()
     mat2->Print();
 
     //calling a function by passing a value
+    //note the call to the copy constructor
     PrintTransposeMatrix(*mat2);
 
     //deleting the dynamically initialized object
     delete mat2;
 
-    //List initialization
+    //list initialization (curly braces)
     Matrix mat3{3,3, data3, "mat3"};
 
-    mat1.Print();
-    mat3.Print();
+    //initialization by copy constructor
+    Matrix mat4(mat1);
+    mat4.Print();
 
     //copy assignment
-    mat1 = mat3;
-    
-    mat1.Print();
-    mat3.Print();
+    //note in the output how 
+    // * a copy of mat3 is created
+    // * this copy is assigned to mat4 (with name 'copy of mat1')
+    // * the original data of mat4 (with name 'copy of mat1') gets destructed
+    mat4 = mat3;
+    mat4.Print();
 
-    //copy construction
-    Matrix mat4(mat1);
 
-    //copy initialization
+    // the following FOUR initializations use an assigment (=)
+    // but the compiler optimizes this code and skips the use
+    // of the defined copy assignment operator... wanna know more => see copy elision
+
+    //assignment initialization
     Matrix mat5 = Matrix(3,3, data1, "mat5");
 
-    //explicit copy-list initialization
+    //explicit assignment-list initialization
     Matrix mat6 = Matrix{3,3, data1, "mat6"};
-
-    //implicit copy-list initialization
+    
+    //implicit assignment-list initialization
     Matrix mat7 = {3,3, data1, "mat7"};
 
-    return 0;
+    //assignment initialization with existing object
+    Matrix mat8 = mat7;
+
+
+    vector<Matrix> matrices;
+    //here we make use of the move constructor (note the && in its definition)
+    //move initialization
+    matrices.push_back({3,3,data1,"mat9"});
+    matrices[0].Print();
+
+    cout << "\n********\nThe End.\n********\n\n";
 }
