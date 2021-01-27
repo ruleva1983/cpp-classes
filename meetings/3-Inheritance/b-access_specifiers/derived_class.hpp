@@ -18,14 +18,6 @@ public:
         cout << " and his/her h-index is " << h_index << " ." << endl;
     }
 	
-    ~DerivedScientist(){
-	cout << "(Derived Scientist class) Removed scientist " << _name << ". " << endl;
-    }
-     
-    void has_birthday(){
-	_age++;
-	cout << "(Derived Scientist class) Happy birthday " << _name << "!! " << endl;
-    }
      
     void introduce_yourself(){	
 	cout << "(Derived Scientist class) My name is " << _name << ". ";

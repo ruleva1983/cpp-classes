@@ -18,7 +18,8 @@ public:
 	}
 	
 	~Person(){
-		cout << "(Base class) Removed " << _name << ". " << endl;
+            cout << endl;
+            cout << "(Base class) Removed " << _name << ". " << endl;
 	}
 	
 	void introduce_yourself(){
@@ -33,8 +34,6 @@ public:
 	}
 	
 	
-
-private:
     string _name;
     int _age;
 };
