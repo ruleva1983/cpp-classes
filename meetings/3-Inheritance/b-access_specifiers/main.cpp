@@ -12,6 +12,6 @@ int main(){
 
     cout << endl << endl;
     DerivedScientist first_scientist("Lev", 120, "UCLA", 340);
-    //first_scientist.introduce_yourself();
+    first_scientist.introduce_yourself();
     //first_scientist._name = "Richard";
 }

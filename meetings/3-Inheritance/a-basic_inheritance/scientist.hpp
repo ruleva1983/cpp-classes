@@ -21,15 +21,14 @@ public:
          cout << endl;
 	 cout << "(Scientist class) Removed scientist " << _name << ". " << endl;
      }
-     
-     
+
      void has_birthday(){
 	    _age++;
 	    cout << "(Scientist class) Happy birthday " << _name << "!! " << endl;
 	}
      
+     
      void introduce_yourself(){
-	
 	   cout << "(Scientist class) My name is " << _name << ". ";
 	   cout << "I am " << _age << " years old and I am a candidate for the Nobel Price in the future." << endl;
      }

@@ -12,7 +12,6 @@ class Person{
 public:
 
 	Person(string name = "", int age = 0) : _name(name), _age(age){
-	
 	}
 	
 	~Person(){}
