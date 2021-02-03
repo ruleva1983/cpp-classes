@@ -1,5 +1,5 @@
-#ifndef BASE_CLASS
-#define BASE_CLASS
+#ifndef HIERARCHICAL
+#define HIERARCHICAL
 
 #include <iostream>
 #include <string>
@@ -11,21 +11,21 @@ class Shape2D{
 
 public:
 
-	Shape2D(float area, float perimeter) : _area(area),
+    Shape2D(float area, float perimeter) : _area(area),
                                                _perimeter(perimeter){
-	}
+    }
 	
-	~Shape2D(){}
+    ~Shape2D(){}
 
-	float get_area(){
-            cout << "Called Shape2D get_area() function..." << endl << endl;
-	    return _area;
-	}
+    float get_area(){
+        cout << "Called Shape2D get_area() function..." << endl << endl;
+	return _area;
+    }
 
-        float get_perimeter(){
-            cout << "Called Shape2D get_perimeter() function..." << endl << endl;
-	    return _perimeter;
-	}
+    float get_perimeter(){
+        cout << "Called Shape2D get_perimeter() function..." << endl << endl;
+	return _perimeter;
+    }
 
 protected:
     float _area;
@@ -56,11 +56,9 @@ public:
         _perimeter = 2*a + 2*b;
     }
 
-    
 protected:
     float _a;
     float _b;
-
 };
 
 class Square : public Rectangle{
@@ -80,10 +78,7 @@ public:
         if (_a == _b) return _a;
         else throw runtime_error("");
     }
-    
-
 
 };
-
 
 #endif
