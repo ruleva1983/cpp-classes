@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "abstract.hpp"
 
 using namespace std;
 class Base{
