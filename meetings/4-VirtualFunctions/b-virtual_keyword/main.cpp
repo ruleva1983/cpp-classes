@@ -43,18 +43,18 @@ public:
 
 int main(){
     
+
+//    Cat cat("Tom");
+//    Dog dog("Pluto");
+
+  //  report(cat);
+  //  report(dog);
+
+ //   Animal &rCat{cat};
+
+ //   report(rCat);
+
 /*
-    Cat cat("Tom");
-    Dog dog("Pluto");
-
-//    report(cat);
-//    report(dog);
-
-    Animal &rCat{cat};
-
-//    report(rCat);
-
-
     Cat fred{ "Fred" };
     Cat misty{ "Misty" };
     Cat zeke{ "Zeke" };
@@ -68,6 +68,7 @@ int main(){
     for (auto *animal : animals)
         cout << animal->getName() << " says " << animal->speak() << '\n';
 */
+
     int N_animals;
     cout << "How many animals do you want to generate? " << endl;
     cin >> N_animals;
@@ -85,6 +86,9 @@ int main(){
         animals.push_back(new_animal);
     }
 
+    for (int i = 0 ; i < N_animals ; ++i){
+        report(*animals[i]);
+    }
     
     
 

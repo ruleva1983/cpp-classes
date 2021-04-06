@@ -34,7 +34,13 @@ class Dog: public Animal
 {
 public:
     Dog(string name) : Animal{ name }{}
- 
     string speak() { return "Woof"; }
 };
  
+
+class Crocodile: public Animal
+{
+public:
+    Crocodile(string name) : Animal{ name }{}
+    
+};

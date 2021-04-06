@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include "abstract.hpp"
 
 using namespace std;
 class Base{
@@ -17,7 +16,7 @@ class Derived : public Base{
 public:
     Derived (int value): _value(value){}
 
-    string getName() { return "Derived"; }
+    //string getName() { return "Derived"; }
 
     //This needs to be implemented or we get a compilation error
     int getValue() {return _value;}

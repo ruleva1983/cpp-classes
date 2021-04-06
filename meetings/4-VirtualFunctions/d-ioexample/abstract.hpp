@@ -10,7 +10,11 @@ using namespace std;
 namespace pt = boost::property_tree;
 
 class IOHandler{
-protected:
+public:
+    IOHandler(){cout << "ciao";}    
+
+    void say_something(){cout << "I say nothing!!" <<endl;}
+    
     virtual void read(string filename) = 0;
     virtual void write(vector<string> keys,
                        vector<int> values) = 0;

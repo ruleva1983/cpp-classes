@@ -38,15 +38,15 @@ int main(){
     //The getName function is defined in the derived class so that will be called
     //The getValue function is not defined in the derived class, but it is in 
     //the base class, so that will be called.
-    cout << "derived is a " << derived.getName() << " and has value " << derived.getValue() << '\n';
-    cout << "pderived is a " << pderived->getName() << " and has value " << pderived->getValue() << '\n';
-    cout << "rderived is a " << rderived.getName() << " and has value " << rderived.getValue() << endl << endl;
+    //cout << "derived is a " << derived.getName() << " and has value " << derived.getValue() << '\n';
+    //cout << "pderived is a " << pderived->getName() << " and has value " << pderived->getValue() << '\n';
+    //cout << "rderived is a " << rderived.getName() << " and has value " << rderived.getValue() << endl << endl;
 
 
     //From last class we saw that a derived object contains a reference to the base
     //object so does the following make sense?
-    Base *pBase{&derived};
-    Base &rBase{derived};
+    Base* pBase{&derived};
+    Base& rBase{derived};
 
     //It works!! We can define a pointer to a base class that refers to an 
     //object of the derived class. This has huge positive consequences but 
@@ -62,6 +62,6 @@ int main(){
     
     //If we try to use a member function of the derived class we get a compilation error
     //The pointer to Base is not able to find a function defined in the derived class
-    //cout << "pBase is a " << pBase->getName() << " and has value " << pBase->getdoubleValue() << '\n';
+    cout << "pBase is a " << pBase->getName() << " and has value " << pBase->getdoubleValue() << '\n';
 
 }

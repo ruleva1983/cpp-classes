@@ -5,7 +5,7 @@ using namespace std;
 
 int main(){
 
-    
+  
   IOJson json;
   json.read("sample.json");
   json.write();
@@ -13,4 +13,5 @@ int main(){
   IOCSV csv;
   csv.read("sample.csv");
   csv.write();
+  csv.say_something();
 }
